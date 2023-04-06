@@ -1,21 +1,28 @@
-import { Container, Row, Column } from "react-bootstrap"
+import { Container, Row, Col } from "react-bootstrap"
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
+import HomeScreen from "./screen/HomeScreen";
+import ProductScreen from "./screen/ProductScreen";
+
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
+
+
 function App() {
   return (
-    <div>
+    <Router>
     <Header/>
     <main className="py-5">
       <Container>
-        <Row>
-          
-        </Row>
+        <Routes>
+          <Route exact path="/" element={<HomeScreen/>}/>
+          <Route exact path="/product/:id" element={<ProductScreen/>}/>
+        </Routes>
       </Container>
     </main>
     <Footer/>
-    </div>
+    </Router>
   );
 }
 
