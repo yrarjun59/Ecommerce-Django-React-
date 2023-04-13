@@ -13,12 +13,13 @@ function ProductScreen() {
   const [product, setProduct] = useState([])
   
   useEffect(()=>{
-    async function fetchProduct(){
-      const {data} = await axios.get(`/api/product/${id}`)
-      setProduct(data)
-    }
-
-    fetchProduct()
+    // async function fetchProduct(){
+      // const {data} = await axios.get(`/api/product/${id}`)
+      // setProduct(data)
+      // }
+      
+      console.log("Product:data")
+    // fetchProduct()
   },[])
 
   return (
