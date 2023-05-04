@@ -3,7 +3,7 @@ import { Link, Navigate, useLocation, useNavigate, useParams } from 'react-route
 import { useDispatch, useSelector } from 'react-redux'
 import { Row, Col, ListGroup, Image, Form, Button, Card } from 'react-bootstrap'
 import Message from '../components/Message'
-import { addToCart } from '../actions/cartActions'
+import { addToCart, removeFromCart } from '../actions/cartActions'
 
 function CartScreen() {
     const { id } = useParams()
@@ -24,8 +24,7 @@ function CartScreen() {
     const {cartItems} = cart
 
     const removeFromCartHandler = (id) => {
-        // dispatch(removeFromCart(id))
-        console.log("removed")
+        dispatch(removeFromCart(id))
     }
 
     const checkoutHandler = () => {
@@ -39,7 +38,7 @@ function CartScreen() {
             <h1>Shopping Cart</h1>
             { cartItems.length === 0 ? (
                 <Message variant="info">
-                    Your Cart is Empty
+                    Your Cart is Empty <Link to="/">Go Back</Link>
                 </Message>
             ):(
                 <ListGroup variant = 'flush'>
