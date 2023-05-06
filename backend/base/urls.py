@@ -10,4 +10,6 @@ urlpatterns = [
 
     path('users/profile/', views.getUserProfile, name="user-profile"),
 
+    path('users/', views.getUsers, name="users"),
+
 ]
