@@ -8,8 +8,7 @@ from rest_framework.response import Response
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import make_password, check_password
 
-from .models import *
-from .serializers import ProductSerializers, UserSerializer, UserSerializerWithToken
+from base.serializers import  UserSerializer, UserSerializerWithToken
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
@@ -47,7 +46,6 @@ def registerUser(request):
         return Response(message, status=status.HTTP_400_BAD_REQUEST)
 
 
-
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def getUserProfile(request):
@@ -60,17 +58,4 @@ def getUserProfile(request):
 def getUsers(request):
     users = User.objects.all()
     serializer = UserSerializer(users, many=True)
-    return Response(serializer.data)
-
-@api_view(['GET'])
-def getProducts(request):
-    products = Product.objects.all()
-    serializer = ProductSerializers(products, many=True)
-    return Response(serializer.data)
-
-
-@api_view(['GET'])
-def getProduct(request,pk):
-    product = Product.objects.get(_id=pk)
-    serializer = ProductSerializers(product, many=False)
     return Response(serializer.data)
