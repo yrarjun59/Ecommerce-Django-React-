@@ -19,7 +19,7 @@ class UserSerializer(serializers.ModelSerializer):
         return obj.is_staff
     
     def get_name(self, obj):
-        name = f"{obj.first_name} {obj.last_name}"
+        name = obj.first_name
         if name == '':
             name = obj.email
         return name
@@ -29,7 +29,7 @@ class UserSerializerWithToken(UserSerializer):
 
     class Meta:
         model = User
-        fields = ['id', '_id', 'token', 'username', 'email', 'name','isAdmin']
+        fields = ['id','_id','username','email','name','isAdmin','token']
 
     def get_token(self,obj):
         token = RefreshToken.for_user(obj)

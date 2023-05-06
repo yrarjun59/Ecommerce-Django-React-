@@ -6,12 +6,14 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from rest_framework.response import Response
 
 from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
 
 from .models import *
 from .serializers import ProductSerializers, UserSerializer, UserSerializerWithToken
 
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework import status
 
 class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
     def validate(self, attrs):
@@ -26,25 +28,25 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
 class MyTokenObtainPairView(TokenObtainPairView):
     serializer_class = MyTokenObtainPairSerializer
 
+@api_view(['POST'])
+def registerUser(request):
+    data = request.data
 
-@api_view(['VIEW', 'GET'])
-def getRoutes(request):
-    routes = [
-        '/api/products/',
-        '/api/product/create/',
-        
-        '/api/product/upload/',
-        
-        '/api/product/<id>/reviews/',
-        
-        '/api/product/<top>/',
-        '/api/product/<id>/',
-        
-        '/api/product/delete/<id>/',
-        '/api/product/update/<id>/',
-        
-    ]
-    return Response(routes)
+    try:
+        user = User.objects.create(
+        first_name = data['name'],
+        username = data['username'],
+        email = data['email'],
+        password = make_password(data['password']),
+        )
+
+        serializer = UserSerializerWithToken(user, many=False)
+        return Response(serializer.data)
+    except:
+        message = {'detail':'User with email already exits'}
+        return Response(message, status=status.HTTP_400_BAD_REQUEST)
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
