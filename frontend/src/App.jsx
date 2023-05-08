@@ -11,6 +11,7 @@ import LoginScreen from "./screen/LoginScreen";
 
 import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import RegisterScreen from "./screen/RegisterScreen";
+import ProfileScreen from "./screen/ProfileScreen";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
           <Route exact path="/" element={<HomeScreen/>}/>
           <Route exact path="/login" element={<LoginScreen/>}/>
           <Route exact path="/register" element={<RegisterScreen/>}/>
+          <Route exact path="/profile" element={<ProfileScreen/>}/>
 
           <Route exact path="/product/:id" element={<ProductScreen/>}/>
           <Route exact path="/cart/:id?" element={<CartScreen/>}/>
