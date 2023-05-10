@@ -7,11 +7,11 @@ import HomeScreen from "./screen/HomeScreen";
 import ProductScreen from "./screen/ProductScreen";
 import CartScreen from "./screen/CartScreen";
 import LoginScreen from "./screen/LoginScreen";
-
-
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import RegisterScreen from "./screen/RegisterScreen";
 import ProfileScreen from "./screen/ProfileScreen";
+import ShippingScreen from "./screen/ShippingScreen";
+
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
 
           <Route exact path="/product/:id" element={<ProductScreen/>}/>
           <Route exact path="/cart/:id?" element={<CartScreen/>}/>
+          <Route exact path="/shipping" element={<ShippingScreen/>}/>
         </Routes>
       </Container>
     </main>
