@@ -1,3 +1,4 @@
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 import { Container, Row, Col } from "react-bootstrap"
 
 import Header from "./components/Header";
@@ -10,8 +11,8 @@ import LoginScreen from "./screen/LoginScreen";
 import RegisterScreen from "./screen/RegisterScreen";
 import ProfileScreen from "./screen/ProfileScreen";
 import ShippingScreen from "./screen/ShippingScreen";
+import PaymentScreen from "./screen/PaymentScreen";
 
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
           <Route exact path="/product/:id" element={<ProductScreen/>}/>
           <Route exact path="/cart/:id?" element={<CartScreen/>}/>
           <Route exact path="/shipping" element={<ShippingScreen/>}/>
+          <Route exact path="/payment" element={<PaymentScreen/>}/>
         </Routes>
       </Container>
     </main>
