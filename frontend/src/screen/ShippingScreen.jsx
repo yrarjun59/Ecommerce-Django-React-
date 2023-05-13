@@ -4,7 +4,7 @@ import FormContainer from '../components/FormContainer'
 import { Button, Form } from 'react-bootstrap';
 import { saveShippingAddress } from '../actions/cartActions'
 import { useNavigate } from 'react-router-dom';
-import CheckoutSteps from './CheckoutSteps';
+import CheckoutSteps from '../components/CheckoutSteps';
 import LoginScreen from './LoginScreen';
 
 
