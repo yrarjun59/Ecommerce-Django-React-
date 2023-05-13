@@ -1,36 +1,54 @@
-import {createStore, combineReducers, applyMiddleware} from "redux"
-import thunk from 'redux-thunk'
-import {composeWithDevTools} from "redux-devtools-extension"
-import { productDetailReducer, productListReducer } from "./reducers/productReducers"
-import { cartReducer } from "./reducers/cartReducers"
-import { userDetailReducer, userProfileUpdateReducer, userRegisterReducer, userloginReducer } from "./reducers/userReducers"
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import thunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import {
+  productDetailReducer,
+  productListReducer,
+} from "./reducers/productReducers";
+import { cartReducer } from "./reducers/cartReducers";
+import {
+  userDetailReducer,
+  userProfileUpdateReducer,
+  userRegisterReducer,
+  userloginReducer,
+} from "./reducers/userReducers";
 
 const reducer = combineReducers({
-    productList: productListReducer,
-    productDetail:productDetailReducer,
-    cart:cartReducer,
-    userLogin: userloginReducer,
-    userRegister:userRegisterReducer,
-    userDetail: userDetailReducer,
-    userUpdateProfile: userProfileUpdateReducer
-})
+  productList: productListReducer,
+  productDetail: productDetailReducer,
+  cart: cartReducer,
+  userLogin: userloginReducer,
+  userRegister: userRegisterReducer,
+  userDetail: userDetailReducer,
+  userUpdateProfile: userProfileUpdateReducer,
+});
 
-const cartItemsFromStorage = localStorage.getItem('cartItems')?JSON.parse(localStorage.getItem('cartItems')):[]
+const cartItemsFromStorage = localStorage.getItem("cartItems")
+  ? JSON.parse(localStorage.getItem("cartItems"))
+  : [];
 
-const userLoginFromStorage = localStorage.getItem('userInfo')?JSON.parse(localStorage.getItem('userInfo')):[]
+const userLoginFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo"))
+  : [];
 
-const shippingAddressFromStorage = localStorage.getItem('shippingAddress')?JSON.parse(localStorage.getItem('shippingAddress')):[]
-
+const shippingAddressFromStorage = localStorage.getItem("shippingAddress")
+  ? JSON.parse(localStorage.getItem("shippingAddress"))
+  : [];
 
 const initialState = {
-    cart:{ cartItems:cartItemsFromStorage, shippingAddress:shippingAddressFromStorage },
-    userLogin:{userInfo: userLoginFromStorage}
+  cart: {
+    cartItems: cartItemsFromStorage,
+    shippingAddress: shippingAddressFromStorage,
+  },
+  userLogin: { userInfo: userLoginFromStorage },
+};
 
-}
+const middleware = [thunk];
 
-const middleware = [thunk]
+const store = createStore(
+  reducer,
+  initialState,
+  composeWithDevTools(applyMiddleware(...middleware))
+);
 
-const store = createStore(reducer, initialState,
-    composeWithDevTools(applyMiddleware(...middleware)))
-
-export default store
+export default store;

@@ -1,5 +1,5 @@
-import {BrowserRouter as Router, Routes, Route} from "react-router-dom"
-import { Container, Row, Col } from "react-bootstrap"
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Container, Row, Col } from "react-bootstrap";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -14,29 +14,27 @@ import ShippingScreen from "./screen/ShippingScreen";
 import PaymentScreen from "./screen/PaymentScreen";
 import PlaceOrderScreen from "./screen/PlaceOrderScreen";
 
-
-
 function App() {
   return (
     <Router>
-    <Header/>
-    <main className="py-5">
-      <Container>
-        <Routes>
-          <Route exact path="/" element={<HomeScreen/>}/>
-          <Route exact path="/login" element={<LoginScreen/>}/>
-          <Route exact path="/register" element={<RegisterScreen/>}/>
-          <Route exact path="/profile" element={<ProfileScreen/>}/>
+      <Header />
+      <main className="py-5">
+        <Container>
+          <Routes>
+            <Route exact path="/" element={<HomeScreen />} />
+            <Route exact path="/login" element={<LoginScreen />} />
+            <Route exact path="/register" element={<RegisterScreen />} />
+            <Route exact path="/profile" element={<ProfileScreen />} />
 
-          <Route exact path="/product/:id" element={<ProductScreen/>}/>
-          <Route exact path="/cart/:id?" element={<CartScreen/>}/>
-          <Route exact path="/shipping" element={<ShippingScreen/>}/>
-          <Route exact path="/payment" element={<PaymentScreen/>}/>
-          <Route exact path="/placeorder" element={<PlaceOrderScreen/>}/>
-        </Routes>
-      </Container>
-    </main>
-    <Footer/>
+            <Route exact path="/product/:id" element={<ProductScreen />} />
+            <Route exact path="/cart/:id?" element={<CartScreen />} />
+            <Route exact path="/shipping" element={<ShippingScreen />} />
+            <Route exact path="/payment" element={<PaymentScreen />} />
+            <Route exact path="/placeorder" element={<PlaceOrderScreen />} />
+          </Routes>
+        </Container>
+      </main>
+      <Footer />
     </Router>
   );
 }

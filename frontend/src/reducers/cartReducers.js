@@ -1,51 +1,52 @@
 import {
-    ADD_TO_CART,
-    REMOVE_FROM_CART,
-    CART_SAVE_SHIPPING_ADDRESS,
-    CART_SAVE_PAYMENT_METHOD
+  ADD_TO_CART,
+  REMOVE_FROM_CART,
+  CART_SAVE_SHIPPING_ADDRESS,
+  CART_SAVE_PAYMENT_METHOD,
+} from "../constants/cartConstants";
 
-} from "../constants/cartConstants"
+export const cartReducer = (
+  state = { cartItems: [], shippingAddress: {} },
+  action
+) => {
+  switch (action.type) {
+    case ADD_TO_CART:
+      const item = action.payload;
+      const existItem = state.cartItems.find((x) => x.product === item.product);
 
+      if (existItem) {
+        return {
+          ...state,
+          cartItems: state.cartItems.map((x) =>
+            x.product === existItem.product ? item : x
+          ),
+        };
+      } else {
+        return {
+          ...state,
+          cartItems: [...state.cartItems, item],
+        };
+      }
 
-export const cartReducer = (state = {cartItems:[], shippingAddress:{}}, action) => {
-    switch(action.type) {
-        case ADD_TO_CART:
-            const item = action.payload
-            const existItem = state.cartItems.find(x => x.product === item.product)
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter((x) => x.product !== action.payload),
+      };
 
-            if (existItem) {
-                return {
-                    ...state,
-                    cartItems: state.cartItems.map(x =>
-                        x.product === existItem.product ? item : x)
-                }
+    case CART_SAVE_SHIPPING_ADDRESS:
+      return {
+        ...state,
+        shippingAddress: action.payload,
+      };
 
-            } else {
-                return {
-                    ...state,
-                    cartItems: [...state.cartItems, item]
-                }
-            }
+    case CART_SAVE_PAYMENT_METHOD:
+      return {
+        ...state,
+        paymentMethod: action.payload,
+      };
 
-        case REMOVE_FROM_CART:
-            return {
-                ...state,
-                cartItems:state.cartItems.filter(x=>x.product!==action.payload)
-            }
-
-        case CART_SAVE_SHIPPING_ADDRESS:
-            return {
-                ...state,
-                shippingAddress:action.payload
-            }
-
-        case CART_SAVE_PAYMENT_METHOD:
-            return {
-                ...state,
-                paymentMethod:action.payload
-            }
-
-        default:
-            return state    
-    }
-}
+    default:
+      return state;
+  }
+};
