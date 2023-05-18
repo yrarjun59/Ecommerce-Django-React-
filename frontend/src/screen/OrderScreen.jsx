@@ -21,8 +21,10 @@ function OrderScreen() {
   }
 
   useEffect(() => {
-    if (!order || order._id !== +orderId) dispatch(getOrderDetails(orderId));
-  }, [order, orderId]);
+    if (!order || order._id !== Number(orderId)){
+      dispatch(getOrderDetails(orderId));
+    } 
+  }, [dispatch,order, orderId]);
 
   return loading ? (
     <Loader />
@@ -51,9 +53,9 @@ function OrderScreen() {
               </p>
 
               { order.isDelivered ?(
-                <Message variant="success">Deliver on {order.deliveredAt} </Message>
+                <Message variant="success">Delivered on {order.deliveredAt} </Message>
                 ):(
-                  <Message variant="warning">Not Paid</Message>
+                  <Message variant="warning">Not Shipping</Message>
               )}
             </ListGroup.Item>
 
@@ -82,8 +84,8 @@ function OrderScreen() {
                     <ListGroup.Item key={index}>
                       <Row>
                         <Col md={1}>
-                          <Image
-                            src={item.image}
+                        <Image
+                            src={`/images/${item.image}`}
                             alt={item.name}
                             fluid
                             rounded

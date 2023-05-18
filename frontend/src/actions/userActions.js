@@ -20,6 +20,7 @@ import {
     USER_PROFILE_UPDATE_FAIL,
     
 } from "../constants/userConstants"
+import { ORDER_LIST_MY_RESET } from "../constants/orderConstants"
 
 
 export const login = (email, password) => async (dispatch) => {
@@ -185,4 +186,5 @@ export const logout = () => (dispatch) => {
     localStorage.removeItem('userInfo')
     dispatch({ type:USER_LOGOUT })
     dispatch({ type: USER_DETAIL_RESET })
+    dispatch({type: ORDER_LIST_MY_RESET})
 }
