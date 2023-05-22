@@ -8,6 +8,7 @@ urlpatterns = [
     path('profile/update/', views.updateUserProfile, name="user-profile-update"),
 
     path('', views.getUsers, name="users"),
-    path('register/', views.registerUser, name='register-user')
+    path('register/', views.registerUser, name='register-user'),
+    path('delete/<str:pk>', views.deleteUser, name='delete-user')
 
 ]
