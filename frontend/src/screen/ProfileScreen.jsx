@@ -7,7 +7,7 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import FormContainer from "../components/FormContainer";
 import { USER_PROFILE_UPDATE_RESET } from "../constants/userConstants";
-import { userDetails, updateUserProfile } from "../actions/userActions";
+import { getUserDetails, updateUserProfile } from "../actions/userActions";
 import { listMyOrders } from "../actions/orderActions";
 
 
@@ -22,7 +22,7 @@ function ProfileScreen() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const userDetail = useSelector((state) => state.userDetail);
+  const userDetail = useSelector((state) => state.userDetails);
   const { error, loading, user } = userDetail;
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -38,9 +38,9 @@ function ProfileScreen() {
     if (!userInfo) {
       navigate("/login");
     } else {
-      if (!user || !user.name || success) {
+      if (!user || !user.name || success || userInfo._id !== user._id) {
         dispatch({ type: USER_PROFILE_UPDATE_RESET });
-        dispatch(userDetails("profile"));
+        dispatch(getUserDetails("profile"));
         dispatch(listMyOrders());
       } else {
         setName(user.name);
