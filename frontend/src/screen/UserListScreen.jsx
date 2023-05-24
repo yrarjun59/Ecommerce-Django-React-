@@ -6,7 +6,6 @@ import Loader from "../components/Loader";
 import Message from "../components/Message";
 import { useNavigate } from "react-router-dom";
 import { deleteUser, listUsers } from "../actions/userActions";
-// import { listUsers, deleteUser } from '../actions/userActions'
 
 function UserListScreen() {
   const navigate = useNavigate();
