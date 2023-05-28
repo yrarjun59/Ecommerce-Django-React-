@@ -18,7 +18,7 @@ def getMyOrders(request):
     return Response(serializer.data)
 
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])    
+@permission_classes([IsAuthenticated])
 def addOrderItems(request):
     user = request.user
     data = request.data
@@ -27,41 +27,39 @@ def addOrderItems(request):
 
     if orderItems and len(orderItems) == 0:
         return Response({'detail': 'No Order Items'}, status=status.HTTP_400_BAD_REQUEST)
-    else:
+    # 1 create a order
+    order = Order.objects.create(
+        user=user,
+        paymentMethod=data['paymentMethod'],
+        taxPrice=data['taxPrice'],
+        shippingPrice=data['shippingPrice'],
+        totalPrice=data['totalPrice']
+    )
 
-        # 1 create a order
-        order = Order.objects.create(
-            user=user,
-            paymentMethod=data['paymentMethod'],
-            taxPrice=data['taxPrice'],
-            shippingPrice=data['shippingPrice'],
-            totalPrice=data['totalPrice']
-        )
+    # 2 create a shipping address
+    shipping = ShippingAddress.objects.create(
+        order=order,
+        address=data['shippingAddress']['address'],
+        city=data['shippingAddress']['city'],
+        postalCode=data['shippingAddress']['postalCode'],
+    )
 
-        # 2 create a shipping address
-        shipping = ShippingAddress.objects.create(
+    # create order items and set order to oderitem Relationship
+    for i in orderItems:
+        product = Product.objects.get(_id=i['product'])
+
+        item = OrderItem.objects.create(
+            product=product,
             order=order,
-            address=data['shippingAddress']['address'],
-            city=data['shippingAddress']['city'],
-            postalCode=data['shippingAddress']['postalCode'],
+            name=product.name,
+            qty=i['qty'],
+            price=i['price'],
+            image=product.image,
         )
 
-        # create order items and set order to oderitem Relationship
-        for i in orderItems:
-            product = Product.objects.get(_id=i['product'])
-
-            item = OrderItem.objects.create(
-                product=product,
-                order=order,
-                name=product.name,
-                qty=i['qty'],
-                price=i['price'],
-                image=product.image,
-            )
-        
-        # Update Stock
-        product.countInStock -= item.qty
-        product.save()
+    # Update Stock
+    product.countInStock -= item.qty
+    product.save()
 
     serializer = OrderSerializer(order, many=False)
     return Response(serializer.data)
